@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -28,6 +29,8 @@ func StartApplication() {
 
 	if err := srv.ListenAndServe(); err != nil {
 		panic(err)
+	} else {
+		fmt.Println("ssss")
 	}
 
 }
