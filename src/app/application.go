@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"../clients/elasticsearch"
 	"github.com/gorilla/mux"
 )
 
@@ -12,6 +13,9 @@ var (
 )
 
 func StartApplication() {
+
+	elasticsearch.Init()
+
 	mapUrls()
 
 	srv := &http.Server{
