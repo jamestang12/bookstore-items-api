@@ -1,6 +1,8 @@
 package services
 
 import (
+	"net/http"
+
 	"../../../bookstore_utils_go/rest_errors"
 	"../domain/items"
 )
@@ -10,13 +12,13 @@ var (
 )
 
 type itemsServiceInterface interface {
-	Create(items.Item) (*items.Item, *rest_errors.RestErr)
-	Get(string) (*items.Item, *rest_errors.RestErr)
+	Create(items.Item) (*items.Item, rest_errors.RestErr)
+	Get(string) (*items.Item, rest_errors.RestErr)
 }
 
 type itemsService struct{}
 
-func (s *itemsService) Create(itemRequest items.Item) (*items.Item, *rest_errors.RestErr) {
+func (s *itemsService) Create(itemRequest items.Item) (*items.Item, rest_errors.RestErr) {
 	//return nil, rest_errors.NewBadRequestError("testing")
 
 	if err := itemRequest.Save(); err != nil {
@@ -26,6 +28,7 @@ func (s *itemsService) Create(itemRequest items.Item) (*items.Item, *rest_errors
 	return &itemRequest, nil
 }
 
-func (s *itemsService) Get(string) (*items.Item, *rest_errors.RestErr) {
-	return nil, rest_errors.NewBadRequestError("testing2")
+func (s *itemsService) Get(string) (*items.Item, rest_errors.RestErr) {
+	// return nil, rest_errors.NewBadRequestError("testing2")
+	return nil, rest_errors.NewRestErrpr("Not yet implement", http.StatusNotImplemented, "not_implemented", nil)
 }
