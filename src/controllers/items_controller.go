@@ -11,6 +11,7 @@ import (
 	"../../../bookstore_oauth_go/oauth"
 	"../../../bookstore_utils_go/rest_errors"
 	"../domain/items"
+	"../domain/queries"
 	"../services"
 	"../utils/http_utils"
 )
@@ -22,6 +23,7 @@ var (
 type itemsControllerInterface interface {
 	Create(http.ResponseWriter, *http.Request)
 	Get(http.ResponseWriter, *http.Request)
+	Search(http.ResponseWriter, *http.Request)
 }
 
 type itemsController struct {
@@ -89,4 +91,30 @@ func (c *itemsController) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	http_utils.RespondJson(w, http.StatusOK, item)
+}
+
+func (c *itemsController) Search(w http.ResponseWriter, r *http.Request) {
+	byte, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		apiErr := rest_errors.NewBadRequestError("invalid json bocy")
+		http_utils.RespondError(w, apiErr)
+		return
+	}
+
+	defer r.Body.Close()
+
+	var query queries.EsQuery
+	if err := json.Unmarshal(byte, &query); err != nil {
+		apiErr := rest_errors.NewBadRequestError("invalid json bocy")
+		http_utils.RespondError(w, apiErr)
+		return
+	}
+
+	items, searchErr := services.ItemsService.Search(query)
+	if searchErr != nil {
+		http_utils.RespondError(w, searchErr)
+		return
+	}
+
+	http_utils.RespondJson(w, http.StatusOK, items)
 }

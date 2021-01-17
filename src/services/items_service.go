@@ -3,6 +3,7 @@ package services
 import (
 	"../../../bookstore_utils_go/rest_errors"
 	"../domain/items"
+	"../domain/queries"
 )
 
 var (
@@ -12,6 +13,7 @@ var (
 type itemsServiceInterface interface {
 	Create(items.Item) (*items.Item, rest_errors.RestErr)
 	Get(string) (*items.Item, rest_errors.RestErr)
+	Search(queries.EsQuery) ([]items.Item, rest_errors.RestErr)
 }
 
 type itemsService struct{}
@@ -35,4 +37,10 @@ func (s *itemsService) Get(id string) (*items.Item, rest_errors.RestErr) {
 
 	return &item, nil
 	//return nil, rest_errors.NewRestErrpr("Not yet implement", http.StatusNotImplemented, "not_implemented", nil)
+}
+
+func (s *itemsService) Search(query queries.EsQuery) ([]items.Item, rest_errors.RestErr) {
+	dao := items.Item{}
+	return dao.Search(query)
+
 }
