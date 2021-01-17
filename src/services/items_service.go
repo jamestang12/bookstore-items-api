@@ -1,8 +1,6 @@
 package services
 
 import (
-	"net/http"
-
 	"../../../bookstore_utils_go/rest_errors"
 	"../domain/items"
 )
@@ -28,7 +26,13 @@ func (s *itemsService) Create(itemRequest items.Item) (*items.Item, rest_errors.
 	return &itemRequest, nil
 }
 
-func (s *itemsService) Get(string) (*items.Item, rest_errors.RestErr) {
+func (s *itemsService) Get(id string) (*items.Item, rest_errors.RestErr) {
 	// return nil, rest_errors.NewBadRequestError("testing2")
-	return nil, rest_errors.NewRestErrpr("Not yet implement", http.StatusNotImplemented, "not_implemented", nil)
+	item := items.Item{Id: id}
+	if err := item.Get(); err != nil {
+		return nil, err
+	}
+
+	return &item, nil
+	//return nil, rest_errors.NewRestErrpr("Not yet implement", http.StatusNotImplemented, "not_implemented", nil)
 }
