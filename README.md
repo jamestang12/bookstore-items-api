@@ -36,8 +36,6 @@ Book store API is a microservice architecture API that group 3 individual API an
 ## [Book Store Utils Library](https://github.com/jamestang12/bookstore_utils_go)
 - This is the custome build error handing library for this application
 
-## [Book store Utils Library](https://github.com/jamestang12/bookstore_utils_go)
-
 ## [Book Store Ouath Library](https://github.com/jamestang12/bookstore_oauth_go)
 - This is the custome build OAuth Library for this application which handle authentication and communicat with the Book Store OAuth API
 
